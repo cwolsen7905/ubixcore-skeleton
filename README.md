@@ -20,7 +20,6 @@ composer.json / composer.lock   requires ubixsys/ubixcore - commit the lock, it 
 bin/ubix                        CLI entry point (yours; lists the command namespaces to scan)
 public/index.php                web entry point (yours; serves app/<APP_NAME>)
 app/HelloApi/src/               Dependencies.php (PHP-DI), Middleware.php, Routes.php - one folder per deployable app
-app/UbixCli/src/                the CLI's container definitions
 php/App/                        your code, PSR-4 root App\  (rename: composer.json autoload + the namespace)
 tests/                          App\Tests\ - every concrete class needs a test case (tests/PhpunitTestCasesTest.php enforces it)
 templates/default/              Latte templates
