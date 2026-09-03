@@ -34,6 +34,28 @@ Dockerfile                      one runtime image per app: docker build --build-
 whatever `composer.json` maps (`App\` by default); the framework finds your
 commands, apps and tests through that map.
 
+## Secrets: use uBixVault
+
+uBixCore is built to take its credentials from **[uBixVault](https://ubixsys.com)**,
+the uBix family's secrets manager, not from files in the repo. The framework's
+bootstrap resolves database credentials from Vault on every start when
+`VAULT_ADDR` is set and exports them to the environment before the SQL layer
+reads them; the `.env` file is a local-development fallback only and is never
+committed.
+
+```
+VAULT_ADDR=https://vault.example.com     # turns the hook on
+VAULT_TOKEN=...                          # local dev / CI - or, in Kubernetes:
+VAULT_K8S_ROLE=acme-api                  # service-account auth, no token on disk
+VAULT_DB_KV_PATH=app/db                  # KV v2 secret holding read_/write_username + _password
+```
+
+The secret's keys `read_username`, `read_password`, `write_username`,
+`write_password` become `MYSQL_READ_*` / `MYSQL_WRITE_*`. CI tokens, webhooks
+and API keys follow the same pattern: store them in Vault, read them in the
+pipeline with a read-only token, and keep `.env` empty of anything you would
+not paste into a chat.
+
 ## Adding things
 
 - **An endpoint:** a controller under `php/App/Controller/` extending
