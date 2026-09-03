@@ -26,7 +26,9 @@ tests/                          App\Tests\ - every concrete class needs a test c
 templates/default/              Latte templates
 sql/migrations/                 bin/ubix migrate:*
 phpcs.xml phpstan.neon phpunit.xml   point at the rules in vendor/ubixsys/ubixcore
-Dockerfile                      one runtime image per app: docker build --build-arg APP_NAME=HelloApi .
+Dockerfile / Dockerfile_Test    runtime image (APP_NAME per Deployment) and the lint-and-test image layered on it
+.gitlab-ci.yml bin/deploy.sh bin/promote.sh bin/lib/notify.sh   the pipeline: build → lint-and-test → deploy → promote → notify
+bin/vault-ci-setup.sh           one-time uBixVault setup for the pipeline; docs/ci-setup.md lists every variable and secret
 .env.example                    copied to .env on create-project; never commit .env
 ```
 
@@ -55,6 +57,12 @@ The secret's keys `read_username`, `read_password`, `write_username`,
 and API keys follow the same pattern: store them in Vault, read them in the
 pipeline with a read-only token, and keep `.env` empty of anything you would
 not paste into a chat.
+
+## CI/CD
+
+The pipeline is included. Before its first green run it needs a runner, read
+access to the private uBixCore registry, three GitLab CI variables and a few
+uBixVault secrets — all listed, in order, in [`docs/ci-setup.md`](docs/ci-setup.md).
 
 ## Adding things
 
