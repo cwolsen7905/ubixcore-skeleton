@@ -7,6 +7,8 @@ ENV APP_NAME=${APP_NAME}
 
 USER root
 RUN apk add --no-cache git && mkdir -p /web && chown -R www:www /web && chmod -R 0755 /web
+# nginx site for /web/public (the base image's default config serves nothing useful)
+COPY config/devops/nginx.conf /etc/nginx/nginx.conf
 USER www
 
 COPY --chown=www composer.json composer.lock /web/
