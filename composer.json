@@ -5,12 +5,9 @@
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        { "type": "vcs", "url": "https://github.com/ubixsys/ubixcore.git" }
-    ],
     "require": {
         "php": "^8.3",
-        "ubixsys/ubixcore": "dev-dev"
+        "ubixsys/ubixcore": "^0.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
