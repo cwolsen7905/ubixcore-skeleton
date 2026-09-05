@@ -26,8 +26,12 @@ first and falls back to the second:
   deploy token with `read_package_registry`; store it as
   `secret/<project>/composer` with keys `username` and `token` (step 4 does this).
 - **Job token allowlist:** on the `ubixsys/ubixcore` project, Settings → CI/CD
-  → Job token permissions, add your project. Same on `k8s/baseimages` (the base
-  image is pulled with the job token).
+  → Job token permissions, add your project (only needed while the packages
+  come from a private GitLab registry).
+- **Base image:** the Dockerfiles default to the public
+  `ghcr.io/ubixsys/ubixcore-php:8.5`; nothing to configure. To build from a
+  private mirror instead, pass `--build-arg BASE_IMAGE=<registry>/<image>:<tag>`
+  in the build job.
 
 Developers also need the token locally, once:
 `composer config -g gitlab-token.<gitlab host> <username> <token>`.
@@ -78,6 +82,5 @@ It creates the policy `<project>-ci-ro` (read on `secret/<project>/*`), writes
 ## 6. First pipeline
 
 Push to `dev`. Expected first-run failures, in order, if a step above was
-skipped: base-image pull denied (job token allowlist on `k8s/baseimages`),
-Composer 401 (step 2), "no test-db credentials from vault" (steps 3–4),
+skipped: Composer 401 (step 2), "no test-db credentials from vault" (steps 3–4),
 deploy `kubectl` errors (step 1 kubeconfig, step 5 secrets).

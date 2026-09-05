@@ -2,8 +2,10 @@
 #   docker build --build-arg APP_NAME=HelloApi -t myproject-hello-api .
 # uBixCore is installed from composer.lock at build time; it is never committed.
 # syntax=docker/dockerfile:1
-ARG BASE_TAG=dev
-FROM gitlab.brainchurts.com:5050/k8s/baseimages/nginx-php85-fpm-memcache:${BASE_TAG}
+# The uBixCore PHP runtime (nginx + PHP-FPM + memcache(d), Alpine, port 8080).
+# Public by default; override BASE_IMAGE at build time to use a private mirror.
+ARG BASE_IMAGE=ghcr.io/ubixsys/ubixcore-php:8.5
+FROM ${BASE_IMAGE}
 ARG APP_NAME
 ENV APP_NAME=${APP_NAME}
 
