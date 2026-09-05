@@ -1,6 +1,6 @@
 # uBixCore skeleton
 
-The starting point for a project built on [uBixCore](https://github.com/cwolsen7905/ubixcore):
+The starting point for a project built on [uBixCore](https://github.com/ubixsys/ubixcore):
 thin entry points, one example app, the quality gate wired to the rules that ship
 in the framework, and nothing from the framework committed in your repo.
 

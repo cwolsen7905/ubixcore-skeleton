@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/cwolsen7905/ubixcore.git" }
+        { "type": "vcs", "url": "https://github.com/ubixsys/ubixcore.git" }
     ],
     "require": {
         "php": "^8.3",
